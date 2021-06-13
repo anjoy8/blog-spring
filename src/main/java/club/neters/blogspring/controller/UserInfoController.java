@@ -25,10 +25,6 @@ public class UserInfoController {
         _userInfoService = userInfoService;
     }
 
-    @GetMapping("/info")
-    public String info(String id) {
-        return "aaa";
-    }
 
     /**
      * 列表查询
@@ -37,18 +33,11 @@ public class UserInfoController {
      * @return
      */
     @ResponseBody
-    @ApiOperation(value = "desc of method", notes = "")
+    @ApiOperation(value = "获取用户列表", notes = "")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseBean listPage(UserInfoDto bean) {
         var userBeans = _userInfoService.findList(bean);
         return ResponseBean.ok(userBeans);
-    }
-
-    @ApiOperation(value = "获取菜单详情", notes = "根据id获取菜单")
-    @ApiImplicitParam(name = "id", value = "菜单ID", required = true, dataType = "String", paramType = "query")
-    @RequestMapping("get-by-id")
-    public ResponseBean getById(@RequestParam("id") String id) {
-        return ResponseBean.ok(null);
     }
 
 }
