@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SysUserDTO {
+public class SysTestDTO {
     /**
      * 账号
      */
