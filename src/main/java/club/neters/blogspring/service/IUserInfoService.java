@@ -5,6 +5,8 @@ import club.neters.blogspring.model.dto.UserInfoDto;
 import club.neters.blogspring.model.entity.bs.UserInfoEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * 用户信息 Service 接口
  *
@@ -18,5 +20,5 @@ public interface IUserInfoService extends IService<UserInfoEntity> {
      * @param bean
      * @return
      */
-    ResponseBean findList(UserInfoDto bean);
+    ResponseBean<List<UserInfoDto>> findList(UserInfoDto bean);
 }

@@ -1,4 +1,4 @@
-package club.neters.blogspring.serviceimpl;
+package club.neters.blogspring.service.impl;
 
 import club.neters.blogspring.mapper.UserInfoMapper;
 import club.neters.blogspring.model.dto.ResponseBean;
@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -31,12 +32,13 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfoEnt
 
     private UserInfoMapper userInfoMapper;
 
+    @Autowired
     public UserInfoServiceImpl(UserInfoMapper userInfoMapper) {
         this.userInfoMapper = userInfoMapper;
     }
 
     @Override
-    public ResponseBean findList(UserInfoDto bean) {
+    public ResponseBean<List<UserInfoDto>> findList(UserInfoDto bean) {
         LambdaQueryWrapper<UserInfoEntity> wrapper = createWrapper(bean);
 
         // 数据处理

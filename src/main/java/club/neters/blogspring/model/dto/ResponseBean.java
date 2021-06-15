@@ -3,7 +3,7 @@ package club.neters.blogspring.model.dto;
 import lombok.Data;
 
 @Data
-public class ResponseBean {
+public class ResponseBean<T> {
     /**
      * 错误代码
      */
@@ -17,14 +17,14 @@ public class ResponseBean {
     /**
      * 返回数据
      */
-    private Object data;
+    private T data;
 
-    public static ResponseBean ok(Object data) {
+    public static <T> ResponseBean<T> ok(T data) {
         return ok(data, "success");
     }
 
-    public static ResponseBean ok(Object data, String msg) {
-        ResponseBean bean = new ResponseBean();
+    public static <T> ResponseBean<T> ok(T data, String msg) {
+        ResponseBean<T> bean = new ResponseBean<>();
         bean.setData(data);
         bean.setCode(200);
         bean.setMessage(msg);
@@ -32,12 +32,12 @@ public class ResponseBean {
     }
 
 
-    public static ResponseBean error(Object data) {
+    public static <T> ResponseBean<T> error(T data) {
         return error(data, "服务器异常");
     }
 
-    public static ResponseBean error(Object data, String msg) {
-        ResponseBean bean = new ResponseBean();
+    public static <T> ResponseBean<T> error(T data, String msg) {
+        ResponseBean<T> bean = new ResponseBean<>();
         bean.setData(data);
         bean.setCode(500);
         bean.setMessage(msg);
