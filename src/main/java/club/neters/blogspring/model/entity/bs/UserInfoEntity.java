@@ -4,6 +4,7 @@ import club.neters.blogspring.core.annotation.EntityDoc;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
  * @author laozhang
  * @date 2021/06/12
  */
+@EqualsAndHashCode(callSuper = true)
 @EntityDoc(note = "系统用户", isClass = true)
 @Data
 @NoArgsConstructor

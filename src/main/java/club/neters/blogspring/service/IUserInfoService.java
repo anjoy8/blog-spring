@@ -16,9 +16,6 @@ import java.util.List;
 public interface IUserInfoService extends IService<UserInfoEntity> {
     /**
      * 查询列表
-     *
-     * @param bean
-     * @return
      */
     ResponseBean<List<UserInfoDto>> findList(UserInfoDto bean);
 }

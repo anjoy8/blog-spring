@@ -21,14 +21,14 @@ public @interface EntityDoc {
      * 注释
      * 类注释/字段注释
      *
-     * @return
+     * @return note
      */
     String note() default "";
 
     /**
      * 是否属于类注释
      *
-     * @return
+     * @return 是否是类
      */
     boolean isClass() default false;
 }

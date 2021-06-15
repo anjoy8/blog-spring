@@ -30,7 +30,7 @@ import java.util.List;
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfoEntity> implements IUserInfoService {
 
 
-    private UserInfoMapper userInfoMapper;
+    private final UserInfoMapper userInfoMapper;
 
     @Autowired
     public UserInfoServiceImpl(UserInfoMapper userInfoMapper) {
@@ -58,10 +58,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfoEnt
     /**
      * 整理查询条件
      *
-     * @param bean
-     * @return
+     * @param bean 入参
      */
-    private LambdaQueryWrapper createWrapper(UserInfoDto bean) {
+    private LambdaQueryWrapper<UserInfoEntity> createWrapper(UserInfoDto bean) {
         LambdaQueryWrapper<UserInfoEntity> wrapper = Wrappers.lambdaQuery();
         if (bean == null || bean.getValid() == null) {
             wrapper.eq(UserInfoEntity::getValid, 1);

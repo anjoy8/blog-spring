@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * user info mapper
+ *
  * @author laozhang
  * @date 2021/06/12
  */
