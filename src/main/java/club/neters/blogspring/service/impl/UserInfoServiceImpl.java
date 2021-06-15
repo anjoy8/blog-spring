@@ -3,7 +3,7 @@ package club.neters.blogspring.service.impl;
 import club.neters.blogspring.mapper.UserInfoMapper;
 import club.neters.blogspring.model.dto.ResponseBean;
 import club.neters.blogspring.model.dto.UserInfoDto;
-import club.neters.blogspring.model.entity.bs.UserInfoEntity;
+import club.neters.blogspring.model.entity.bs.SysUserInfo;
 import club.neters.blogspring.service.IUserInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfoEntity> implements IUserInfoService {
+public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, SysUserInfo> implements IUserInfoService {
 
 
     private final UserInfoMapper userInfoMapper;
@@ -39,10 +39,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfoEnt
 
     @Override
     public ResponseBean<List<UserInfoDto>> findList(UserInfoDto bean) {
-        LambdaQueryWrapper<UserInfoEntity> wrapper = createWrapper(bean);
+        LambdaQueryWrapper<SysUserInfo> wrapper = createWrapper(bean);
 
         // 数据处理
-        List<UserInfoEntity> list = userInfoMapper.selectList(wrapper);
+        List<SysUserInfo> list = userInfoMapper.selectList(wrapper);
         if (CollectionUtils.isEmpty(list)) {
             return ResponseBean.ok(new ArrayList<>());
         }
@@ -60,44 +60,30 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfoEnt
      *
      * @param bean 入参
      */
-    private LambdaQueryWrapper<UserInfoEntity> createWrapper(UserInfoDto bean) {
-        LambdaQueryWrapper<UserInfoEntity> wrapper = Wrappers.lambdaQuery();
-        if (bean == null || bean.getValid() == null) {
-            wrapper.eq(UserInfoEntity::getValid, 1);
-        }
+    private LambdaQueryWrapper<SysUserInfo> createWrapper(UserInfoDto bean) {
+
+        LambdaQueryWrapper<SysUserInfo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(SysUserInfo::getTdIsDelete, 0);
 
         // 自定义条件
         if (bean != null) {
-            if (bean.getValid() != null) {
-                wrapper.eq(UserInfoEntity::getValid, bean.getValid());
-            }
 
-            if (!ObjectUtils.isEmpty(bean.getCode())) {
-                wrapper.eq(UserInfoEntity::getCode, bean.getCode());
+            if (!ObjectUtils.isEmpty(bean.getUID())) {
+                wrapper.eq(SysUserInfo::getUID, bean.getUID());
             }
 
             if (!ObjectUtils.isEmpty(bean.getName())) {
-                wrapper.like(UserInfoEntity::getName, bean.getName());
+                wrapper.like(SysUserInfo::getName, bean.getName());
             }
 
-            if (StringUtils.isNotBlank(bean.getAccount())) {
-                wrapper.eq(UserInfoEntity::getAccount, bean.getAccount());
+            if (StringUtils.isNotBlank(bean.getULoginName())) {
+                wrapper.eq(SysUserInfo::getULoginName, bean.getULoginName());
             }
-            if (StringUtils.isNotBlank(bean.getPassword())) {
-                wrapper.eq(UserInfoEntity::getPassword, bean.getPassword());
+
+            if (StringUtils.isNotBlank(bean.getURealName())) {
+                wrapper.eq(SysUserInfo::getURealName, bean.getURealName());
             }
-            if (StringUtils.isNotBlank(bean.getStatus())) {
-                wrapper.eq(UserInfoEntity::getStatus, bean.getStatus());
-            }
-            if (StringUtils.isNotBlank(bean.getApproveStatus())) {
-                wrapper.eq(UserInfoEntity::getApproveStatus, bean.getApproveStatus());
-            }
-            if (StringUtils.isNotBlank(bean.getApproveResult())) {
-                wrapper.eq(UserInfoEntity::getApproveResult, bean.getApproveResult());
-            }
-            if (CollectionUtils.isNotEmpty(bean.getUserCodeList())) {
-                wrapper.in(UserInfoEntity::getCode, bean.getUserCodeList());
-            }
+
         }
 
         return wrapper;
