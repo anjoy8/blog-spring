@@ -59,4 +59,14 @@ public class CommonExceptionHandler {
         log.error("未处理Service异常", e);
         return ApiResultVo.error(e.getMessage());
     }
+
+    /**
+     * 处理异常
+     */
+    @ExceptionHandler(value = {Exception.class})
+    @ResponseBody
+    public ApiResultVo<?> handleException(Exception e) {
+        log.error("未处理异常", e);
+        return ApiResultVo.error("服务异常");
+    }
 }
