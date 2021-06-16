@@ -1,5 +1,6 @@
 package club.neters.blogspring.controller;
 
+import club.neters.blogspring.core.annotation.Auth;
 import club.neters.blogspring.model.query.user.UserInfoQuery;
 import club.neters.blogspring.model.vo.ApiResultVo;
 import club.neters.blogspring.model.vo.user.UserInfoVo;
@@ -40,6 +41,7 @@ public class UserInfoController {
      */
     @ApiOperation(value = "获取用户列表")
     @GetMapping(value = "/list")
+    @Auth(role = "user")
     public ApiResultVo<List<UserInfoVo>> listPage(UserInfoQuery query) {
         List<UserInfoVo> list = userInfoService.findList(query);
         return ApiResultVo.ok(list);
