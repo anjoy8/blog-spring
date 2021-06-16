@@ -27,10 +27,10 @@ public class ModulePermission extends BaseEntity {
 
     @EntityDoc(note = "ModuleId")
     @TableField("ModuleId")
-    private int ModuleId;
+    private Integer ModuleId;
 
     @EntityDoc(note = "PermissionId")
     @TableField("PermissionId")
-    private int PermissionId;
+    private Integer PermissionId;
 
 }

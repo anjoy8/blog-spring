@@ -25,7 +25,7 @@ public class BlogArticle {
 
     @EntityDoc(note = "bID")
     @TableId(value = "bID", type = IdType.AUTO)
-    private int bID;
+    private Integer bID;
 
     @EntityDoc(note = "bsubmitter")
     @TableField("bsubmitter")

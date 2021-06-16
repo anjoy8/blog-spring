@@ -25,7 +25,7 @@ public class BaseEntity implements Serializable {
 
     @EntityDoc(note = "Id")
     @TableId(value = "Id", type = IdType.AUTO)
-    private int Id;
+    private Integer Id;
 
     @EntityDoc(note = "创建人Id")
     @TableField("CreateId")
