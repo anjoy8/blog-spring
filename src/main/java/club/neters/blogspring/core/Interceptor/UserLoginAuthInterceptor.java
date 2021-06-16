@@ -45,13 +45,7 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
         String role = null;
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (!StringUtils.hasText(token)) {
-            try {
-                ApiResultVo<Object> resultVo = ApiResultVo.error("user no login");
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                response.getWriter().write(JsonUtil.toJson(resultVo));
-            } catch (IOException e) {
-                log.error("异常信息", e);
-            }
+            printErrorMsg(response, "未登录");
             return false;
         }
 
@@ -65,21 +59,28 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
             role = claims.get("role").asString();
             log.info(role);
             if (System.currentTimeMillis() / 1000L > claims.get("exp").asInt()) {
+                printErrorMsg(response, "已过期");
                 return false;
             }
         } catch (JWTVerificationException exception) {
             // Invalid signature/claims
             log.error("异常信息", exception);
-            try {
-                ApiResultVo<Object> resultVo = ApiResultVo.error("Identity authentication failed");
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                response.getWriter().write(JsonUtil.toJson(resultVo));
-            } catch (IOException e) {
-                log.error("异常信息", e);
-            }
+            printErrorMsg(response, "Identity authentication failed");
             return false;
         }
 
         return true;
+    }
+
+
+    private void printErrorMsg(HttpServletResponse response, String msg) {
+        try {
+            ApiResultVo<Object> resultVo = ApiResultVo.error(msg);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(JsonUtil.toJson(resultVo));
+        } catch (IOException e) {
+            log.error("异常信息", e);
+        }
     }
 }
