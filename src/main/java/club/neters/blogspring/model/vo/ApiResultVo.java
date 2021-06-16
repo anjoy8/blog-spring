@@ -1,9 +1,16 @@
-package club.neters.blogspring.model.dto;
+package club.neters.blogspring.model.vo;
 
 import lombok.Data;
 
+/**
+ * common vo
+ *
+ * @author wuare
+ * @date 2021/6/16
+ */
 @Data
-public class ResponseBean<T> {
+public class ApiResultVo<T> {
+
     /**
      * 错误代码
      */
@@ -19,12 +26,12 @@ public class ResponseBean<T> {
      */
     private T data;
 
-    public static <T> ResponseBean<T> ok(T data) {
+    public static <T> ApiResultVo<T> ok(T data) {
         return ok(data, "success");
     }
 
-    public static <T> ResponseBean<T> ok(T data, String msg) {
-        ResponseBean<T> bean = new ResponseBean<>();
+    public static <T> ApiResultVo<T> ok(T data, String msg) {
+        ApiResultVo<T> bean = new ApiResultVo<>();
         bean.setData(data);
         bean.setCode(200);
         bean.setMessage(msg);
@@ -32,17 +39,15 @@ public class ResponseBean<T> {
     }
 
 
-    public static <T> ResponseBean<T> error(T data) {
+    public static <T> ApiResultVo<T> error(T data) {
         return error(data, "服务器异常");
     }
 
-    public static <T> ResponseBean<T> error(T data, String msg) {
-        ResponseBean<T> bean = new ResponseBean<>();
+    public static <T> ApiResultVo<T> error(T data, String msg) {
+        ApiResultVo<T> bean = new ApiResultVo<>();
         bean.setData(data);
         bean.setCode(500);
         bean.setMessage(msg);
         return bean;
     }
-
-
 }

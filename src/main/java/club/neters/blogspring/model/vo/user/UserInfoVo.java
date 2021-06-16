@@ -1,4 +1,4 @@
-package club.neters.blogspring.model.dto;
+package club.neters.blogspring.model.vo.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,17 +8,16 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 系统用户表
+ * user information view object
  *
- * @author laozhang
- * @date 2021/06/21
+ * @author wuare
+ * @date 2021/6/16
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserInfoDto {
-
+public class UserInfoVo {
     private Integer uID;
 
     private String uLoginName;
@@ -61,5 +60,4 @@ public class UserInfoDto {
      * 新密码
      */
     private String newPassword;
-
 }

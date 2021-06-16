@@ -1,12 +1,15 @@
 package club.neters.blogspring.controller;
 
-import club.neters.blogspring.model.dto.UserInfoDto;
-import club.neters.blogspring.model.dto.ResponseBean;
+import club.neters.blogspring.model.vo.ApiResultVo;
+import club.neters.blogspring.model.vo.user.UserInfoVo;
 import club.neters.blogspring.service.IUserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -38,8 +41,9 @@ public class UserInfoController {
     @ResponseBody
     @ApiOperation(value = "获取用户列表")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseBean<List<UserInfoDto>> listPage(UserInfoDto bean) {
-        return userInfoService.findList(bean);
+    public ApiResultVo<List<UserInfoVo>> listPage(UserInfoVo bean) {
+        List<UserInfoVo> list = userInfoService.findList(bean);
+        return ApiResultVo.ok(list);
     }
 
 }
