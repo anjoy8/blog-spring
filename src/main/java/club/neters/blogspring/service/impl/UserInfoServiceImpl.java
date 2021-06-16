@@ -1,12 +1,10 @@
 package club.neters.blogspring.service.impl;
 
 import club.neters.blogspring.mapper.UserInfoMapper;
-import club.neters.blogspring.model.dto.ResponseBean;
-import club.neters.blogspring.model.dto.UserInfoDto;
 import club.neters.blogspring.model.entity.bs.SysUserInfo;
+import club.neters.blogspring.model.vo.user.UserInfoVo;
 import club.neters.blogspring.service.IUserInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户信息 Service 实现类
@@ -38,21 +36,17 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, SysUserInfo
     }
 
     @Override
-    public ResponseBean<List<UserInfoDto>> findList(UserInfoDto bean) {
+    public List<UserInfoVo> findList(UserInfoVo bean) {
         LambdaQueryWrapper<SysUserInfo> wrapper = createWrapper(bean);
 
         // 数据处理
         List<SysUserInfo> list = userInfoMapper.selectList(wrapper);
-        if (CollectionUtils.isEmpty(list)) {
-            return ResponseBean.ok(new ArrayList<>());
-        }
-        List<UserInfoDto> restList = new ArrayList<>();
-        list.forEach(v -> {
-            UserInfoDto item = new UserInfoDto();
+
+        return list.stream().map(v -> {
+            UserInfoVo item = new UserInfoVo();
             BeanUtils.copyProperties(v, item);
-            restList.add(item);
-        });
-        return ResponseBean.ok(restList);
+            return item;
+        }).collect(Collectors.toList());
     }
 
     /**
@@ -60,7 +54,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, SysUserInfo
      *
      * @param bean 入参
      */
-    private LambdaQueryWrapper<SysUserInfo> createWrapper(UserInfoDto bean) {
+    private LambdaQueryWrapper<SysUserInfo> createWrapper(UserInfoVo bean) {
 
         LambdaQueryWrapper<SysUserInfo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(SysUserInfo::getTdIsDelete, 0);
