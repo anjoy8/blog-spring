@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -56,9 +57,10 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
                     .build();
             DecodedJWT jwt = verifier.verify(token);
             Map<String, Claim> claims = jwt.getClaims();
-            role = claims.get("role").asString();
+            role = Optional.ofNullable(claims.get("role")).map(Claim::asString).orElse("");
+            Integer exp = Optional.ofNullable(claims.get("exp")).map(Claim::asInt).orElse(0);
             log.info(role);
-            if (System.currentTimeMillis() / 1000L > claims.get("exp").asInt()) {
+            if (System.currentTimeMillis() / 1000L > exp) {
                 printErrorMsg(response, "已过期");
                 return false;
             }
