@@ -23,33 +23,36 @@ import java.util.Date;
 @AllArgsConstructor
 public class BaseEntity implements Serializable {
 
-    /**
-     * 主键 唯一标识
-     * mybatis-plus自动生成UUID格式id
-     */
-    @EntityDoc(note = "主键")
-    @TableId(type = IdType.ASSIGN_UUID)
-    protected String code;
+    @EntityDoc(note = "Id")
+    @TableId(value = "Id", type = IdType.AUTO)
+    private int Id;
 
-    /**
-     * 是否有效
-     */
-    @EntityDoc(note = "是否有效")
-    @TableField(fill = FieldFill.INSERT)
-    protected Integer valid;
+    @EntityDoc(note = "创建人Id")
+    @TableField("CreateId")
+    private Integer CreateId;
 
-    /**
-     * 创建时间
-     */
+    @EntityDoc(note = "创建人名称")
+    @TableField("CreateBy")
+    private String CreateBy;
+
     @EntityDoc(note = "创建时间")
-    @TableField(fill = FieldFill.INSERT)
-    protected Date createTime;
+    @TableField(value = "CreateTime", fill = FieldFill.INSERT)
+    protected Date CreateTime;
 
-    /**
-     * 更新时间
-     */
-    @EntityDoc(note = "更新时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    protected Date updateTime;
+    @EntityDoc(note = "修改人Id")
+    @TableField("ModifyId")
+    private Integer ModifyId;
+
+    @EntityDoc(note = "修改人名称")
+    @TableField("ModifyBy")
+    private String ModifyBy;
+
+    @EntityDoc(note = "修改时间")
+    @TableField(value = "ModifyTime", fill = FieldFill.INSERT)
+    protected Date ModifyTime;
+
+    @EntityDoc(note = "是否删除")
+    @TableField("tdIsDelete")
+    private Boolean IsDeleted;
 
 }
