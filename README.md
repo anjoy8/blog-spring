@@ -5,8 +5,8 @@
 
 ### 核心操作
 
-- [ ] 在 `/src/main/resources/application.properties` 文件中，配置项目端口号、MySql连接数据等；
-- [ ] 使用 `/src/main/club.neters.blogspring/generator/MyBatisPlusGenerator` 生成器（直接运行即可），生成三层代码（实体、仓储、服务），若存在，则不覆盖；
+- [x] 在 `/src/main/resources/application.properties` 文件中，配置项目端口号、MySql连接数据等；
+- [x] 使用 `/src/main/club.neters.blogspring/generator/MyBatisPlusGenerator` 生成器（直接运行即可），生成三层代码（实体、仓储、服务），若存在，则不覆盖；
   
 ### 目的：   
 
