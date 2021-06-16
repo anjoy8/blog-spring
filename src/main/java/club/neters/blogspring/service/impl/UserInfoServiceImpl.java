@@ -2,6 +2,7 @@ package club.neters.blogspring.service.impl;
 
 import club.neters.blogspring.mapper.UserInfoMapper;
 import club.neters.blogspring.model.entity.bs.SysUserInfo;
+import club.neters.blogspring.model.query.user.UserInfoQuery;
 import club.neters.blogspring.model.vo.user.UserInfoVo;
 import club.neters.blogspring.service.IUserInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -36,8 +37,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, SysUserInfo
     }
 
     @Override
-    public List<UserInfoVo> findList(UserInfoVo bean) {
-        LambdaQueryWrapper<SysUserInfo> wrapper = createWrapper(bean);
+    public List<UserInfoVo> findList(UserInfoQuery query) {
+        LambdaQueryWrapper<SysUserInfo> wrapper = createWrapper(query);
 
         // 数据处理
         List<SysUserInfo> list = userInfoMapper.selectList(wrapper);
@@ -52,30 +53,30 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, SysUserInfo
     /**
      * 整理查询条件
      *
-     * @param bean 入参
+     * @param query 入参
      */
-    private LambdaQueryWrapper<SysUserInfo> createWrapper(UserInfoVo bean) {
+    private LambdaQueryWrapper<SysUserInfo> createWrapper(UserInfoQuery query) {
 
         LambdaQueryWrapper<SysUserInfo> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(SysUserInfo::getTdIsDelete, 0);
 
         // 自定义条件
-        if (bean != null) {
+        if (query != null) {
 
-            if (!ObjectUtils.isEmpty(bean.getUID())) {
-                wrapper.eq(SysUserInfo::getUID, bean.getUID());
+            if (!ObjectUtils.isEmpty(query.getUID())) {
+                wrapper.eq(SysUserInfo::getUID, query.getUID());
             }
 
-            if (!ObjectUtils.isEmpty(bean.getName())) {
-                wrapper.like(SysUserInfo::getName, bean.getName());
+            if (!ObjectUtils.isEmpty(query.getName())) {
+                wrapper.like(SysUserInfo::getName, query.getName());
             }
 
-            if (StringUtils.isNotBlank(bean.getULoginName())) {
-                wrapper.eq(SysUserInfo::getULoginName, bean.getULoginName());
+            if (StringUtils.isNotBlank(query.getULoginName())) {
+                wrapper.eq(SysUserInfo::getULoginName, query.getULoginName());
             }
 
-            if (StringUtils.isNotBlank(bean.getURealName())) {
-                wrapper.eq(SysUserInfo::getURealName, bean.getURealName());
+            if (StringUtils.isNotBlank(query.getURealName())) {
+                wrapper.eq(SysUserInfo::getURealName, query.getURealName());
             }
 
         }

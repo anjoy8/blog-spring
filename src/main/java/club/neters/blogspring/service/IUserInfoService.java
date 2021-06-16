@@ -1,6 +1,7 @@
 package club.neters.blogspring.service;
 
 import club.neters.blogspring.model.entity.bs.SysUserInfo;
+import club.neters.blogspring.model.query.user.UserInfoQuery;
 import club.neters.blogspring.model.vo.user.UserInfoVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -17,5 +18,5 @@ public interface IUserInfoService extends IService<SysUserInfo> {
     /**
      * 查询列表
      */
-    List<UserInfoVo> findList(UserInfoVo bean);
+    List<UserInfoVo> findList(UserInfoQuery bean);
 }

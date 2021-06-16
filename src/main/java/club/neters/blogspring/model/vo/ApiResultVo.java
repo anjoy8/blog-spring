@@ -43,6 +43,10 @@ public class ApiResultVo<T> {
         return error(data, "服务器异常");
     }
 
+    public static <T> ApiResultVo<T> error(String msg) {
+        return error(null, msg);
+    }
+
     public static <T> ApiResultVo<T> error(T data, String msg) {
         ApiResultVo<T> bean = new ApiResultVo<>();
         bean.setData(data);
