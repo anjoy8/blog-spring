@@ -26,7 +26,6 @@ import java.util.Date;
 public class OperateLog {
 
     @EntityDoc(note = "Id")
-    @TableField("Id")
     @TableId(value = "Id", type = IdType.AUTO)
     private Integer Id;
 

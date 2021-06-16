@@ -1,6 +1,7 @@
 package club.neters.blogspring.model.entity.bs;
 
 import club.neters.blogspring.core.annotation.EntityDoc;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -23,15 +24,15 @@ import lombok.NoArgsConstructor;
 public class RoleModulePermission extends BaseEntity {
 
     @EntityDoc(note = "RoleId")
-    @TableId(value = "RoleId")
+    @TableField("RoleId")
     private Integer RoleId;
 
     @EntityDoc(note = "ModuleId")
-    @TableId(value = "ModuleId")
+    @TableField("ModuleId")
     private Integer ModuleId;
 
     @EntityDoc(note = "PermissionId")
-    @TableId(value = "PermissionId")
+    @TableField("PermissionId")
     private Integer PermissionId;
 
 }
