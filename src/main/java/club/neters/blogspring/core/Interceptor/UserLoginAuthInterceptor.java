@@ -46,7 +46,7 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
         String role = null;
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (!StringUtils.hasText(token)) {
-            printErrorMsg(response, "未登录");
+            printErrorMsg(response, "未登录，请先登录！");
             return false;
         }
 
@@ -61,13 +61,13 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
             Integer exp = Optional.ofNullable(claims.get("exp")).map(Claim::asInt).orElse(0);
             log.info(role);
             if (System.currentTimeMillis() / 1000L > exp) {
-                printErrorMsg(response, "已过期");
+                printErrorMsg(response, "令牌已过期");
                 return false;
             }
         } catch (JWTVerificationException exception) {
             // Invalid signature/claims
             log.error("异常信息", exception);
-            printErrorMsg(response, "Identity authentication failed");
+            printErrorMsg(response, "未授权，请联系管理员！");
             return false;
         }
 
