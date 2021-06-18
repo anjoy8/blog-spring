@@ -2,6 +2,9 @@ package club.neters.blogspring.core.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -12,7 +15,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerConfig implements WebMvcConfigurer {
+
+    /**
+     * Configure simple automated controllers pre-configured with the response
+     * status code and/or a view to render the response body. This is useful in
+     * cases where there is no need for custom controller logic -- e.g. render a
+     * home page, perform simple site URL redirects, return a 404 status with
+     * HTML content, a 204 with no content, and more.
+     */
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addRedirectViewController("/", "swagger-ui.html");
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    }
+
     /**
      * 创建API应用
      * apiInfo() 增加API相关信息
