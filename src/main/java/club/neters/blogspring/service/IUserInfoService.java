@@ -19,4 +19,8 @@ public interface IUserInfoService extends IService<SysUserInfo> {
      * 查询列表
      */
     List<UserInfoVo> findList(UserInfoQuery bean);
+    /**
+     * 查找用户信息
+     */
+    SysUserInfo findOne(String name,String pass);
 }

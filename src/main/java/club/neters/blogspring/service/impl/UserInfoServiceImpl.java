@@ -50,6 +50,15 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, SysUserInfo
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public SysUserInfo findOne(String name, String pass) {
+        LambdaQueryWrapper<SysUserInfo> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(SysUserInfo::getTdIsDelete, 0)
+                .eq(SysUserInfo::getULoginName, name)
+                .eq(SysUserInfo::getULoginPWD, pass.toUpperCase());
+        return userInfoMapper.selectOne(wrapper);
+    }
+
     /**
      * 整理查询条件
      *

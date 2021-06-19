@@ -43,7 +43,6 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
         }
 
         // 验证token
-        String role = null;
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (!StringUtils.hasText(token)) {
             printErrorMsg(response, "未登录，请先登录！");
@@ -57,9 +56,13 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
                     .build();
             DecodedJWT jwt = verifier.verify(token);
             Map<String, Claim> claims = jwt.getClaims();
-            role = Optional.ofNullable(claims.get("role")).map(Claim::asString).orElse("");
+            String role = Optional.ofNullable(claims.get("role")).map(Claim::asString).orElse("");
             Integer exp = Optional.ofNullable(claims.get("exp")).map(Claim::asInt).orElse(0);
             log.info(role);
+            if (!authAnnotation.role().equals(role)) {
+                printErrorMsg(response, "请确保有查看此接口的权限！");
+                return false;
+            }
             if (System.currentTimeMillis() / 1000L > exp) {
                 printErrorMsg(response, "令牌已过期");
                 return false;
