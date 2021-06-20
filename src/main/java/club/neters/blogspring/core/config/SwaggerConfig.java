@@ -60,8 +60,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Blog.Spring 测试 Swagger 项目")
-                .description("老张的哲学")
+                .title("Blog.Spring API 服务文档")
+                .description("Blog.Core全家桶之Spring Boot版本项目 - 老张的哲学")
                 .termsOfServiceUrl("https://www.cnblogs.com/laozhang-is-phi/")
                 .version("1.0")
                 .build();
