@@ -50,6 +50,7 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
         }
 
         try {
+            token = token.replace("Bearer ","");
             Algorithm algorithm = Algorithm.HMAC256(CommonConstant.JWT_HMAC256_SECRET);
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(CommonConstant.JWT_ISSUER)
@@ -70,7 +71,7 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
         } catch (JWTVerificationException exception) {
             // Invalid signature/claims
             log.error("异常信息", exception);
-            printErrorMsg(response, "未授权，请联系管理员！");
+            printErrorMsg(response, "认证失败，请确保已经登录！");
             return false;
         }
 
