@@ -69,7 +69,7 @@ public class MyBatisPlusGenerator {
 
         // 数据源配置 从prop文件中获取
         Properties properties = new Properties();
-        String fileName = "application.properties";
+        String fileName = "application.yaml";
         InputStream inputStream = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(fileName);
         try {
