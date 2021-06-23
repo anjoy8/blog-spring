@@ -1,7 +1,7 @@
 package club.neters.blogspring.service.impl;
 
 import club.neters.blogspring.model.entity.bs.Guestbook;
-import club.neters.blogspring.mapper.GuestbookMapper;
+import club.neters.blogspring.mapper.primary.GuestbookMapper;
 import club.neters.blogspring.service.IGuestbookService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author laozhang
- * @since 2021-06-16
+ * @since 2021-06-23
  */
 @Service
 public class GuestbookServiceImpl extends ServiceImpl<GuestbookMapper, Guestbook> implements IGuestbookService {

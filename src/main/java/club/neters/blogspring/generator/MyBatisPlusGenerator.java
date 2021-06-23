@@ -14,12 +14,13 @@ import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -60,42 +61,64 @@ public class MyBatisPlusGenerator {
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 
+        // TODO 数据源名称
+        String dsName = "primary";
 
-        // 数据源配置 从yaml文件中获取
-        // Yaml yaml = new Yaml();
-        // InputStream inputStream = Thread.currentThread().getContextClassLoader()
-        //         .getResourceAsStream("customer.yaml");
-        // Map<String, Object> obj = yaml.load(inputStream);
-
-        // 数据源配置 从prop文件中获取
-        Properties properties = new Properties();
         String fileName = "application.yml";
+        // 数据源配置 从yaml文件中获取
+        Yaml yaml = new Yaml();
         InputStream inputStream = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(fileName);
-        try {
-            properties.load(inputStream);
-        } catch (IOException e) {
-            System.out.println("Read File [" + fileName + "] error, please check it");
-            System.exit(0);
+        Map<String, HashMap<String, Map<String, Object>>> map = yaml.load(inputStream);
+        String active = (String) map.get("spring").get("profiles").get("active");
+        String activeFileName = "application-" + active + ".yml";
+        InputStream inputStream1 = Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream(activeFileName);
+        if (inputStream1 == null) {
+            System.out.println("未找到[" + activeFileName + "]配置文件");
+        }
+        Map<String, HashMap<String, Map<String, Object>>> activeMap = yaml.load(inputStream1);
+        Object datasource = activeMap.get("spring").get("datasource").get(dsName);
+        if (!(datasource instanceof Map)) {
+            System.out.println("未找到spring.datasource." + dsName + "配置");
             return;
         }
-        String active = properties.getProperty("spring.profiles.active");
-        if (active != null && !"".equals(active)) {
-            String activeFileName = "application-" + active + ".properties";
-            InputStream in = Thread.currentThread().getContextClassLoader()
-                    .getResourceAsStream(activeFileName);
-            try {
-                properties.load(in);
-            } catch (IOException e) {
-                System.out.println("Read File [" + activeFileName + "] error, please check it");
-                System.exit(0);
-                return;
-            }
-        }
-        String dsUrl = properties.getProperty("spring.datasource.url");
-        String dsDriverName = properties.getProperty("spring.datasource.driver-class-name");
-        String dsUserName = properties.getProperty("spring.datasource.username");
-        String dsPassword = properties.getProperty("spring.datasource.password");
+        @SuppressWarnings({"unchecked"})
+        Map<String, String> dsMap = (Map<String, String>) datasource;
+        String dsUrl = dsMap.get("jdbc-url");
+        String dsDriverName = dsMap.get("driver-class-name");
+        String dsUserName = dsMap.get("username");
+        String dsPassword = dsMap.get("password");
+        ;
+
+        // 数据源配置 从prop文件中获取
+//        Properties properties = new Properties();
+//        InputStream inputStream = Thread.currentThread().getContextClassLoader()
+//                .getResourceAsStream(fileName);
+//        try {
+//            properties.load(inputStream);
+//        } catch (IOException e) {
+//            System.out.println("Read File [" + fileName + "] error, please check it");
+//            System.exit(0);
+//            return;
+//        }
+//        String active = properties.getProperty("spring.profiles.active");
+//        if (active != null && !"".equals(active)) {
+//            String activeFileName = "application-" + active + ".properties";
+//            InputStream in = Thread.currentThread().getContextClassLoader()
+//                    .getResourceAsStream(activeFileName);
+//            try {
+//                properties.load(in);
+//            } catch (IOException e) {
+//                System.out.println("Read File [" + activeFileName + "] error, please check it");
+//                System.exit(0);
+//                return;
+//            }
+//        }
+//        String dsUrl = properties.getProperty("spring.datasource.url");
+//        String dsDriverName = properties.getProperty("spring.datasource.driver-class-name");
+//        String dsUserName = properties.getProperty("spring.datasource.username");
+//        String dsPassword = properties.getProperty("spring.datasource.password");
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl(dsUrl);
         // dsc.setSchemaName("public");
@@ -109,6 +132,7 @@ public class MyBatisPlusGenerator {
         // pc.setModuleName(scanner("模块名"));
         pc.setParent("club.neters.blogspring");
         pc.setEntity("model.entity.bs");
+        pc.setMapper("mapper." + dsName);
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -131,7 +155,7 @@ public class MyBatisPlusGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/club/neters/blogspring/mapper/"
+                return projectPath + "/src/main/resources/mapper/" + dsName + "/"
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
