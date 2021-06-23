@@ -21,9 +21,9 @@ import java.util.List;
 @Slf4j
 @ControllerAdvice
 public class CommonExceptionHandler {
+
     /**
      * <code>@Valid @RequestBody</code>抛出的异常
-     * 只处理FieldError
      */
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseBody
