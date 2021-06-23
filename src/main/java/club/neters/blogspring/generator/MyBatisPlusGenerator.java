@@ -89,7 +89,6 @@ public class MyBatisPlusGenerator {
         String dsDriverName = dsMap.get("driver-class-name");
         String dsUserName = dsMap.get("username");
         String dsPassword = dsMap.get("password");
-        ;
 
         // 数据源配置 从prop文件中获取
 //        Properties properties = new Properties();
