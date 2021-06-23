@@ -7,17 +7,11 @@ spring:
   application:
     name: blogspring
   datasource:
-    mssql_127:
-      jdbc-url: jdbc:sqlserver://127.0.0.1:1433;databasename=blogcore001
-      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      username: sa
-      password: J
-    mysql_118:
-      name: blog_core
-      jdbc-url: jdbc:mysql://118.25.25.13:3096/singleboot?charset=utf8&useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=UTF-8
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      username: root
-      password: J
+    name: blog_core
+    url: jdbc:mysql://118.25.25.13:3096/singleboot?charset=utf8&useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: J
 
 logback:
   appName: blog-spring
