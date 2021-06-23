@@ -1,10 +1,9 @@
 package club.neters.blogspring.controller;
 
-import club.neters.blogspring.core.annotation.Auth;
 import club.neters.blogspring.model.query.user.UserInfoQuery;
 import club.neters.blogspring.model.vo.ApiResultVo;
 import club.neters.blogspring.model.vo.user.UserInfoVo;
-import club.neters.blogspring.service.IUserInfoService;
+import club.neters.blogspring.service.ISysUserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +24,11 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserInfoController {
 
-    private final IUserInfoService userInfoService;
+    private final ISysUserInfoService sysUserInfoService;
 
     @Autowired
-    public UserInfoController(IUserInfoService userInfoService) {
-        this.userInfoService = userInfoService;
+    public UserInfoController(ISysUserInfoService sysUserInfoService) {
+        this.sysUserInfoService = sysUserInfoService;
     }
 
 
@@ -41,9 +40,9 @@ public class UserInfoController {
      */
     @ApiOperation(value = "获取用户列表")
     @GetMapping(value = "/list")
-    @Auth(role = "user")
+//    @Auth(role = "user")
     public ApiResultVo<List<UserInfoVo>> listPage(UserInfoQuery query) {
-        List<UserInfoVo> list = userInfoService.findList(query);
+        List<UserInfoVo> list = sysUserInfoService.findList(query);
         return ApiResultVo.ok(list);
     }
 

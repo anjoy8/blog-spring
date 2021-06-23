@@ -3,7 +3,7 @@ package club.neters.blogspring.controller;
 import club.neters.blogspring.core.util.JwtUtils;
 import club.neters.blogspring.model.entity.bs.SysUserInfo;
 import club.neters.blogspring.model.vo.ApiResultVo;
-import club.neters.blogspring.service.IUserInfoService;
+import club.neters.blogspring.service.ISysUserInfoService;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,11 +27,11 @@ import java.util.Map;
 @RequestMapping("/api/login")
 public class LoginController {
 
-    private final IUserInfoService userInfoService;
+    private final ISysUserInfoService sysUserInfoService;
 
     @Autowired
-    public LoginController(IUserInfoService userInfoService) {
-        this.userInfoService = userInfoService;
+    public LoginController(ISysUserInfoService sysUserInfoService) {
+        this.sysUserInfoService = sysUserInfoService;
     }
 
     /**
@@ -44,7 +44,7 @@ public class LoginController {
             return ApiResultVo.error("用户名和密码不能为空");
         }
         pass = DigestUtils.md5DigestAsHex(pass.getBytes());
-        SysUserInfo sysUserInfo = userInfoService.findOne(name, pass);
+        SysUserInfo sysUserInfo = sysUserInfoService.findOne(name, pass);
         if (sysUserInfo != null) {
             // ToDo 将该用户所有的角色权限管理存放到内存中
 
