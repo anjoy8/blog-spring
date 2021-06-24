@@ -129,9 +129,11 @@ public class MyBatisPlusGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         // pc.setModuleName(scanner("模块名"));
-        pc.setParent("club.neters.blogspring");
-        pc.setEntity("model.entity.bs");
-        pc.setMapper("mapper." + dsName);
+        pc.setParent("club.neters.blog");
+        pc.setService("app.service");
+        pc.setServiceImpl("app.service.impl");
+        pc.setEntity("domain.entity");
+        pc.setMapper("infra.mapper." + dsName);
         mpg.setPackageInfo(pc);
 
         // 自定义配置
